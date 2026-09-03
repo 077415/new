@@ -4,5 +4,5 @@ public enum Dir {
     LEFT,
     RIGHT,
     STOP,
-    
+    A
 }

@@ -66,4 +66,19 @@ public class Ball  {
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
+    public Point getMuzzlePosition() {
+        if (dir == Dir.RIGHT) {
+            return new Point(x + 55, y + 25);
+        }
+
+        if (dir == Dir.LEFT) {
+            return new Point(x - 15, y + 25);
+        }
+
+        if (dir == Dir.UP) {
+            return new Point(x + 25, y - 15);
+        }
+
+        return new Point(x + 25, y + 55);
+    }
 }
