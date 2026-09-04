@@ -148,7 +148,11 @@ public class GamePanel extends JPanel implements KeyListener {
                     Bown bown = bownIterator.next();
 
                     bown.step();
+                    if (bown.step >= 100) {
+                        bownIterator.remove();
+                    }
                 }
+
 
                 repaint();
             }

@@ -12,7 +12,7 @@ public class Bown {
 
 
     protected void draw(Graphics g) {
-        g.drawImage(image, x, y, 20, 20, null);
+        g.drawImage(image, x, y, 40, 40, null);
 
     }
     public Rectangle getRect() {
