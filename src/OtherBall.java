@@ -6,7 +6,7 @@ public class OtherBall extends Ball {
     int fireStep = 0;
     Smallball bullet;
     boolean firing = false;
-
+    boolean alive = true;
 
     @Override
     public void move(){

@@ -23,12 +23,7 @@ public class GamePanel extends JPanel implements KeyListener {
         for (Smallball smallball : smallballs) {
             smallball.draw(g);
         }
-        for (OtherBall otherBall : otherballs) {
-            if (smallball.getRect().intersects(otherBall.getRect())) {
-                otherBall.alive = false;
-                smallball.alive = false;
-            }
-        }
+
         for (OtherBall otherBall : otherballs) {
             otherBall.draw(g);
 
@@ -91,17 +86,18 @@ public class GamePanel extends JPanel implements KeyListener {
                     OtherBall otherBall = iterator.next();
 
                     otherBall.move();
-
-                    if (!otherBall.alive) {
-                        iterator.remove();
-                    }
-                }
-
                     if (otherBall.firing) {
                         smallballs.add(otherBall.getBullet());
                         otherBall.firing = false;
                     }
+
+                    if (!otherBall.alive) {
+                        iterator.remove();
+                    }
+
                 }
+
+
                 Iterator<Smallball> iterator = smallballs.iterator();
 
                 while (iterator.hasNext()) {
@@ -111,7 +107,12 @@ public class GamePanel extends JPanel implements KeyListener {
                     if (smallball.getRect().intersects(wall.getRect())) {
                         smallball.alive = false;
                     }
-
+                    for (OtherBall otherBall : otherballs) {
+                        if (smallball.getRect().intersects(otherBall.getRect())) {
+                            otherBall.alive = false;
+                            smallball.alive = false;
+                        }
+                    }
                     if (!smallball.alive) {
                         iterator.remove();
                     }
