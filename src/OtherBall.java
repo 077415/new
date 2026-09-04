@@ -52,7 +52,12 @@ public class OtherBall extends Ball {
     public Smallball getBullet() {
         return bullet;
     }
-
+    public void moveBack() {
+        if (dir == Dir.RIGHT) x -= 8;
+        if (dir == Dir.LEFT) x += 8;
+        if (dir == Dir.UP) y += 8;
+        if (dir == Dir.DOWN) y -= 8;
+    }
 
 
 

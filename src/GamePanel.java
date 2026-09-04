@@ -104,6 +104,8 @@ public class GamePanel extends JPanel implements KeyListener {
                     for (OtherBall otherBall2 : otherballs) {
                         if (otherBall != otherBall2
                                 && otherBall.getRect().intersects(otherBall2.getRect())) {
+                            otherBall.moveBack();
+
 
                         }
                     }
