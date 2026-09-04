@@ -1,12 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.util.Random;
 
 public class GamePanel extends JPanel implements KeyListener {
     Ball ball = new Ball();
     Wall wall = new Wall();
+    int score = 0;
+    int enemyCount = 0;
+
+    Properties properties = new Properties();
+
     ArrayList<Smallball> smallballs = new ArrayList<>();
     ArrayList<OtherBall> otherballs = new ArrayList<>();
     ArrayList<Bown> bowns = new ArrayList<>();
@@ -18,6 +27,8 @@ public class GamePanel extends JPanel implements KeyListener {
     protected void paintComponent(Graphics g) {
 
         super.paintComponent(g);
+        g.setColor(Color.BLACK);
+        g.drawString("Score: " + score, 10, 20);
         if (ball.alive) {
             ball.draw(g);
         }
@@ -72,11 +83,30 @@ public class GamePanel extends JPanel implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
     public GamePanel() {
-        otherballs.add(new OtherBall(500, 100));
-        otherballs.add(new OtherBall(600, 200));
-        otherballs.add(new OtherBall(700, 300));
-        otherballs.add(new OtherBall(400, 300));
-        otherballs.add(new OtherBall(300, 300));
+        try {
+            FileInputStream fis = new FileInputStream("config.properties");
+            properties.load(fis);
+
+
+            properties.load(fis);
+
+            enemyCount = Integer.parseInt(
+                    properties.getProperty("enemyCount")
+            );
+
+            System.out.println(enemyCount);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Random random = new Random();
+
+        for (int i = 0; i < enemyCount; i++) {
+            int x = random.nextInt(700);
+            int y = random.nextInt(500);
+
+            otherballs.add(new OtherBall(x, y));
+        }
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(this);
@@ -108,6 +138,9 @@ public class GamePanel extends JPanel implements KeyListener {
 
 
                         }
+                        if (otherBall.getRect().intersects(ball.getRect())) {
+                            otherBall.moveBack();
+                        }
                     }
                     if (otherBall.firing) {
                         smallballs.add(otherBall.getBullet());
@@ -138,11 +171,12 @@ public class GamePanel extends JPanel implements KeyListener {
 
                     for (OtherBall otherBall : otherballs) {
                         if (smallball.getRect().intersects(otherBall.getRect())) {
-                            if (smallball.owner == ball) {
-                                otherBall.alive = false;
+                            if (smallball.owner == ball && otherBall.alive) {                                otherBall.alive = false;
+                                score++;
                                 smallball.alive = false;
                                 Bown bown = new Bown(otherBall.x, otherBall.y);
                                 bowns.add(bown);
+
                             }
                         }
                     }
