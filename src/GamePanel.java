@@ -15,9 +15,11 @@ public class GamePanel extends JPanel implements KeyListener {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
 
-        ball.draw(g);
+        super.paintComponent(g);
+        if (ball.alive) {
+            ball.draw(g);
+        }
         g.setColor(Color.BLACK);
         wall.draw(g);
         for (Smallball smallball : smallballs) {
@@ -52,7 +54,7 @@ public class GamePanel extends JPanel implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_A) {
             Point p = ball.getMuzzlePosition();
 
-            Smallball smallball = new Smallball(p.x, p.y, ball.dir);
+            Smallball smallball = new Smallball(p.x, p.y, ball.dir, ball);
             smallballs.add(smallball);
         }
 
@@ -78,7 +80,9 @@ public class GamePanel extends JPanel implements KeyListener {
         Timer timer = new Timer(3, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ball.move();
+                if (ball.alive) {
+                    ball.move();
+                }
 
                 Iterator<OtherBall> iterator = otherballs.iterator();
 
@@ -107,16 +111,18 @@ public class GamePanel extends JPanel implements KeyListener {
                     if (smallball.getRect().intersects(wall.getRect())) {
                         smallball.alive = false;
                     }
-                    for (OtherBall otherBall : otherballs) {
-                        if (smallball.getRect().intersects(otherBall.getRect())) {
-                            otherBall.alive = false;
-                            smallball.alive = false;
-                        }
+                    if (smallball.getRect().intersects(ball.getRect())
+                            && smallball.owner != ball) {
+                        ball.alive = false;
+                        smallball.alive = false;
                     }
+
                     for (OtherBall otherBall : otherballs) {
                         if (smallball.getRect().intersects(otherBall.getRect())) {
-                            otherBall.alive = false;
-                            smallball.alive = false;
+                            if (smallball.owner == ball) {
+                                otherBall.alive = false;
+                                smallball.alive = false;
+                            }
                         }
                     }
                     if (!smallball.alive) {

@@ -8,6 +8,7 @@ public class Ball  {
 
     Dir dir = Dir.RIGHT;
     boolean moving = false;
+    boolean alive = true;
 
 
     protected void draw(Graphics g) {
@@ -34,6 +35,9 @@ public class Ball  {
         }
     }
     public void move() {
+        if (!alive) {
+            return;
+        }
         if (!moving) {
             return;
         }
@@ -83,6 +87,10 @@ public class Ball  {
             return new Point(x + 25, y - 15);
         }
 
+
         return new Point(x + 25, y + 55);
+    }
+    public Rectangle getRect() {
+        return new Rectangle(x, y, 50, 50);
     }
 }

@@ -47,7 +47,7 @@ public class OtherBall extends Ball {
     }
     public Smallball fire() {
         Point p = getMuzzlePosition();
-        return new Smallball(p.x, p.y, dir);
+        return new Smallball(p.x, p.y, dir,this);
     }
     public Smallball getBullet() {
         return bullet;

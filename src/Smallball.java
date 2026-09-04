@@ -7,11 +7,15 @@ public class Smallball {
     Dir dir = Dir.RIGHT;
     boolean alive = true;
 
+    Ball owner;
 
-    public Smallball(int x, int y, Dir dir) {
+    public Smallball(int x, int y, Dir dir,Ball owner) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.owner = owner;
+
+
     }
 
     protected void draw(Graphics g) {
