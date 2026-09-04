@@ -9,6 +9,7 @@ public class GamePanel extends JPanel implements KeyListener {
     Wall wall = new Wall();
     ArrayList<Smallball> smallballs = new ArrayList<>();
     ArrayList<OtherBall> otherballs = new ArrayList<>();
+    ArrayList<Bown> bowns = new ArrayList<>();
 
 
 
@@ -28,7 +29,9 @@ public class GamePanel extends JPanel implements KeyListener {
 
         for (OtherBall otherBall : otherballs) {
             otherBall.draw(g);
-
+        }
+        for (Bown bown : bowns) {
+            bown.draw(g);
         }
 
     }
@@ -78,8 +81,14 @@ public class GamePanel extends JPanel implements KeyListener {
 
 
         Timer timer = new Timer(3, new ActionListener() {
+
+
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (!ball.alive) {
+                    return;
+                }
+
                 if (ball.alive) {
                     ball.move();
                 }
@@ -122,13 +131,23 @@ public class GamePanel extends JPanel implements KeyListener {
                             if (smallball.owner == ball) {
                                 otherBall.alive = false;
                                 smallball.alive = false;
+                                Bown bown = new Bown(otherBall.x, otherBall.y);
+                                bowns.add(bown);
                             }
                         }
                     }
+
                     if (!smallball.alive) {
                         smallballIterator.remove();
                     }
 
+                }
+                Iterator<Bown> bownIterator = bowns.iterator();
+
+                while (bownIterator.hasNext()) {
+                    Bown bown = bownIterator.next();
+
+                    bown.step();
                 }
 
                 repaint();
