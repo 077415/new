@@ -25,13 +25,13 @@ public class GamePanel extends JPanel implements KeyListener {
 
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        g.setColor(Color.BLACK);
+
         g.drawString("Score: " + score, 10, 20);
         g.drawString("A：发射子弹", 10, 40);
         g.drawString("↑ ↓ ← →：移动", 10, 60);
-
-        super.paintComponent(g);
-        g.setColor(Color.BLACK);
-        g.drawString("Score: " + score, 10, 20);
         if (ball.alive) {
             ball.draw(g);
         }
