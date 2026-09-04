@@ -75,6 +75,8 @@ public class GamePanel extends JPanel implements KeyListener {
         otherballs.add(new OtherBall(500, 100));
         otherballs.add(new OtherBall(600, 200));
         otherballs.add(new OtherBall(700, 300));
+        otherballs.add(new OtherBall(400, 300));
+        otherballs.add(new OtherBall(300, 300));
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(this);
@@ -99,6 +101,12 @@ public class GamePanel extends JPanel implements KeyListener {
                     OtherBall otherBall = iterator.next();
 
                     otherBall.move();
+                    for (OtherBall otherBall2 : otherballs) {
+                        if (otherBall != otherBall2
+                                && otherBall.getRect().intersects(otherBall2.getRect())) {
+
+                        }
+                    }
                     if (otherBall.firing) {
                         smallballs.add(otherBall.getBullet());
                         otherBall.firing = false;
