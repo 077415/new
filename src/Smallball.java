@@ -25,9 +25,6 @@ public class Smallball {
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(1));
         g2d.drawOval(x,y,5,5);
-        if(dir == Dir.A){
-            g2d.drawOval(x++,y++,5,5);
-        }
     }
     public void move() {
         if (dir == Dir.RIGHT) {

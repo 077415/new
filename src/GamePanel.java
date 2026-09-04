@@ -35,7 +35,6 @@ public class GamePanel extends JPanel implements KeyListener {
         if (ball.alive) {
             ball.draw(g);
         }
-        g.setColor(Color.BLACK);
         wall.draw(g);
         for (Smallball smallball : smallballs) {
             smallball.draw(g);
@@ -88,8 +87,6 @@ public class GamePanel extends JPanel implements KeyListener {
     public GamePanel() {
         try {
             FileInputStream fis = new FileInputStream("config.properties");
-            properties.load(fis);
-
 
             properties.load(fis);
 
@@ -123,10 +120,7 @@ public class GamePanel extends JPanel implements KeyListener {
                 if (!ball.alive) {
                     return;
                 }
-
-                if (ball.alive) {
                     ball.move();
-                }
 
                 Iterator<OtherBall> iterator = otherballs.iterator();
 
