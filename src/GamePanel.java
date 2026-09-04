@@ -8,6 +8,9 @@ public class GamePanel extends JPanel implements KeyListener {
     Ball ball = new Ball();
     Wall wall = new Wall();
     ArrayList<Smallball> smallballs = new ArrayList<>();
+    ArrayList<OtherBall> otherballs = new ArrayList<>();
+
+
 
 
     @Override
@@ -15,9 +18,14 @@ public class GamePanel extends JPanel implements KeyListener {
         super.paintComponent(g);
 
         ball.draw(g);
+        g.setColor(Color.BLACK);
         wall.draw(g);
         for (Smallball smallball : smallballs) {
             smallball.draw(g);
+        }
+        for (OtherBall otherBall : otherballs) {
+            otherBall.draw(g);
+
         }
 
     }
@@ -58,6 +66,9 @@ public class GamePanel extends JPanel implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
     public GamePanel() {
+        otherballs.add(new OtherBall(500, 100));
+        otherballs.add(new OtherBall(600, 200));
+        otherballs.add(new OtherBall(700, 300));
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(this);
@@ -67,6 +78,15 @@ public class GamePanel extends JPanel implements KeyListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ball.move();
+
+                for (OtherBall otherBall : otherballs) {
+                    otherBall.move();
+
+                    if (otherBall.firing) {
+                        smallballs.add(otherBall.getBullet());
+                        otherBall.firing = false;
+                    }
+                }
                 Iterator<Smallball> iterator = smallballs.iterator();
 
                 while (iterator.hasNext()) {

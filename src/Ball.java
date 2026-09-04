@@ -11,6 +11,10 @@ public class Ball  {
 
 
     protected void draw(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(1));
+
         g.drawOval(x, y, 50, 50);
 
         if (dir == Dir.RIGHT) {
